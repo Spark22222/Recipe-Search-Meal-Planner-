@@ -4,6 +4,7 @@ import { searchMeals } from './api/mealApi'
 import './App.css'
 import SearchBar from './components/SearchBar'
 import MealCard from './components/MealCard'
+import RecipeModal from './components/RecipeModal'
 
 function App() {
 
@@ -12,6 +13,8 @@ function App() {
   const [meals, setMeals] = useState<Meal[]>([])
   const [error, setError] = useState<string>('')
   const [hasSearched, setHasSearched] = useState<boolean>(false)
+
+  const [selectedMeal, setSelectedMeal] = useState<Meal | null>(null)
 
   const handleSearch = async (): Promise<void> => {
     if (searchTerm.trim() === '') {
@@ -58,10 +61,20 @@ function App() {
           meals.map((meal) => (
             <MealCard
               key={meal.idMeal}
-              meal={meal}/>
+              meal={meal}
+              onSelect={() => setSelectedMeal(meal)}
+            />
           ))
         }
       </div>
+
+      {
+        selectedMeal !== null && (
+          <RecipeModal
+            meal={selectedMeal}
+            onClose={() => setSelectedMeal(null)} />
+        )
+      }
     </>
   )
 }
