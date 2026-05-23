@@ -4,15 +4,16 @@ import getIngredients from "../utils/getIngredients";
 interface RecipeModalProps {
     meal: Meal
     onClose: () => void
+    onAddToShoppingList: () => void
 }
 
-const RecipeModal = ({ meal, onClose }: RecipeModalProps) => {
+const RecipeModal = ({ meal, onClose,onAddToShoppingList }: RecipeModalProps) => {
     const ingredients = getIngredients(meal)
     return (
         <div className="modal-backdrop">
             <div className="modal-content">
                 <button onClick={onClose}>Close</button>
-
+                <button onClick={onAddToShoppingList}>Add to shopping list</button>
                 <h2>{meal.strMeal}</h2>
                 <img src={meal.strMealThumb} alt={meal.strMeal} width="300" />
 
