@@ -5,6 +5,9 @@ import './App.css'
 import SearchBar from './components/SearchBar'
 import MealCard from './components/MealCard'
 import RecipeModal from './components/RecipeModal'
+import getIngredients from './utils/getIngredients'
+import type { IngredientItem } from './utils/getIngredients'
+import { loadShoppingList, saveShoppingList } from './utils/shoppingListStorage'
 
 function App() {
 
@@ -15,6 +18,8 @@ function App() {
   const [hasSearched, setHasSearched] = useState<boolean>(false)
 
   const [selectedMeal, setSelectedMeal] = useState<Meal | null>(null)
+
+  const [shoppingList, setShoppingList] = useState<IngredientItem[]>([])
 
   const handleSearch = async (): Promise<void> => {
     if (searchTerm.trim() === '') {
@@ -35,6 +40,15 @@ function App() {
       setLoading(false)
     }
 
+  }
+
+  const handleAddToShoppingList = (meal:Meal) => {
+    const currentList = loadShoppingList()
+    const mealList = getIngredients(meal)
+    const newList = [...currentList,...mealList]
+    setShoppingList(newList)
+    saveShoppingList(newList)
+    alert("Shopping list has been updated!")
   }
 
   return (
@@ -72,7 +86,9 @@ function App() {
         selectedMeal !== null && (
           <RecipeModal
             meal={selectedMeal}
-            onClose={() => setSelectedMeal(null)} />
+            onClose={() => setSelectedMeal(null)}
+            onAddToShoppingList={() => handleAddToShoppingList(selectedMeal)}
+            />
         )
       }
     </>
