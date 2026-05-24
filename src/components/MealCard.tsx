@@ -1,23 +1,24 @@
-import type { Meal } from "../types/meal";
+import type { Meal } from '../types/meal'
 
 interface MealCardProps {
-    meal: Meal
-    onSelect:() => void
+  meal: Meal
+  onSelect: () => void
 }
 
-const MealCard = ({ meal,onSelect }: MealCardProps) => {
+const MealCard = ({ meal, onSelect }: MealCardProps) => {
+  return (
+    <article className="meal-card">
+      <img src={meal.strMealThumb} alt={meal.strMeal} />
 
-    return (
-        <div className="meal-card">
-            <img src={meal.strMealThumb} alt={meal.strMeal} width='200'></img>
-            <div className="meal-card-content">
-                <h3>{meal.strMeal}</h3>
-                <p>{meal.strCategory}</p>
-                <p>{meal.strArea}</p>
-                <button onClick={onSelect}>SHOW MORE</button>                
-            </div>
-        </div>
-    )
+      <div className="meal-card-content">
+        <h3>{meal.strMeal}</h3>
+        <p>{meal.strCategory}</p>
+        <p>{meal.strArea}</p>
+
+        <button onClick={onSelect}>Show More</button>
+      </div>
+    </article>
+  )
 }
 
 export default MealCard
