@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import type { Meal } from './types/meal'
-import { searchMeals } from './api/mealApi'
+import { getRandomMeal, searchMeals } from './api/mealApi'
 import './App.css'
 import SearchBar from './components/SearchBar'
 import MealCard from './components/MealCard'
@@ -54,6 +54,22 @@ function App() {
     alert("Shopping list has been updated!")
   }
 
+  const handleSurpriseMe = async () =>{
+    setLoading(true)
+    setError('')
+    setHasSearched(true)
+
+    try {
+      const result: Meal[] = await getRandomMeal()
+      setMeals(result)
+    } catch (error) {
+      setError(`${error}`)
+      setMeals([])
+    } finally {
+      setLoading(false)
+    }
+  }
+
 
 
   return (
@@ -67,6 +83,7 @@ function App() {
 
       <button className="shopping-list-button" onClick={() => setIsShoppingListOpen(true)}>view my shopping list</button>
 
+      <button className="suprise-me-button" onClick={handleSurpriseMe}>Suprise Me!</button>
       {
         isShoppingListOpen && (
           <ShoppingListModalProps
