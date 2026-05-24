@@ -9,6 +9,7 @@ import getIngredients from './utils/getIngredients'
 import type { IngredientItem } from './utils/getIngredients'
 import { loadShoppingList, saveShoppingList } from './utils/shoppingListStorage'
 import ShoppingListModalProps from './components/ShoppingListModal'
+import { mergeShoppingList } from './utils/mergeShoppingList'
 
 function App() {
 
@@ -48,7 +49,7 @@ function App() {
   const handleAddToShoppingList = (meal: Meal) => {
     const currentList = loadShoppingList()
     const mealList = getIngredients(meal)
-    const newList = [...currentList, ...mealList]
+    const newList = mergeShoppingList([...currentList, ...mealList])
     setShoppingList(newList)
     saveShoppingList(newList)
     alert("Shopping list has been updated!")
