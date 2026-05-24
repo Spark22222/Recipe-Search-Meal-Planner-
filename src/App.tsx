@@ -76,15 +76,22 @@ function App() {
   return (
     <main className='app'>
 
+      <header className="app-header">
+        <h1>Recipe Search & Meal Planner</h1>
+        <p>Search recipes, view details, and build your shopping list.</p>
+      </header>
+
       <SearchBar
         searchTerm={searchTerm}
         onSearchTermChange={setSearchTerm}
         onSearch={handleSearch}
       />
+      <div className="action-row">
+        <button className="shopping-list-button" onClick={() => setIsShoppingListOpen(true)}>view my shopping list</button>
 
-      <button className="shopping-list-button" onClick={() => setIsShoppingListOpen(true)}>view my shopping list</button>
+        <button className="suprise-me-button" onClick={handleSurpriseMe}>Suprise Me!</button>
+      </div>
 
-      <button className="suprise-me-button" onClick={handleSurpriseMe}>Suprise Me!</button>
       {
         isShoppingListOpen && (
           <ShoppingListModalProps
@@ -95,16 +102,18 @@ function App() {
       }
 
       {
-        loading && <p>Loading...</p>
+        loading && <p className="message">Loading...</p>
       }
+
+      {error && <p className="message error">{error}</p>}
 
       {
         !loading && error === '' && hasSearched && meals.length === 0 && (
-          <p>No meals found!</p>
+          <p className="message">No meals found!</p>
         )
       }
 
-      <div className="meal-grid">
+      <section className="meal-grid">
         {
           meals.map((meal) => (
             <MealCard
@@ -114,7 +123,7 @@ function App() {
             />
           ))
         }
-      </div>
+      </section>
 
       {
         selectedMeal !== null && (

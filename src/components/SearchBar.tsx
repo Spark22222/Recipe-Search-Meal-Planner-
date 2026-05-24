@@ -17,6 +17,7 @@ const SearchBar = ({ searchTerm, onSearchTermChange, onSearch }: SearchBarProps)
             <input type='text'
                 value={searchTerm}
                 onChange={(e) => onSearchTermChange(e.target.value)}
+                placeholder="Search meals, e.g. chicken, beef, pasta"
             />
             <button type='submit'>SEARCH</button>
         </form>
