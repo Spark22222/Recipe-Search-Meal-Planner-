@@ -8,12 +8,14 @@ interface MealCardProps {
 const MealCard = ({ meal,onSelect }: MealCardProps) => {
 
     return (
-        <div>
+        <div className="meal-card">
             <img src={meal.strMealThumb} alt={meal.strMeal} width='200'></img>
-            <h3>{meal.strMeal}</h3>
-            <p>{meal.strCategory}</p>
-            <p>{meal.strArea}</p>
-            <button onClick={onSelect}>SHOW MORE</button>
+            <div className="meal-card-content">
+                <h3>{meal.strMeal}</h3>
+                <p>{meal.strCategory}</p>
+                <p>{meal.strArea}</p>
+                <button onClick={onSelect}>SHOW MORE</button>                
+            </div>
         </div>
     )
 }

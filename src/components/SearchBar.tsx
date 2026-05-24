@@ -6,20 +6,21 @@ interface SearchBarProps {
     onSearch: () => Promise<void>
 }
 
-const SearchBar = ({ searchTerm, onSearchTermChange: onSearchTermChange, onSearch }: SearchBarProps) => {
+const SearchBar = ({ searchTerm, onSearchTermChange, onSearch }: SearchBarProps) => {
     const handleSubmit = (event: SyntheticEvent<HTMLFormElement>) => {
         event.preventDefault()
         onSearch()
     }
 
     return (
-        <form onSubmit={handleSubmit}>
+        <form className='search-bar' onSubmit={handleSubmit}>
             <input type='text'
                 value={searchTerm}
                 onChange={(e) => onSearchTermChange(e.target.value)}
             />
             <button type='submit'>SEARCH</button>
         </form>
+        
     )
 }
 
