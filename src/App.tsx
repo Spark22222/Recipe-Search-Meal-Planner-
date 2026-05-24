@@ -8,6 +8,7 @@ import RecipeModal from './components/RecipeModal'
 import getIngredients from './utils/getIngredients'
 import type { IngredientItem } from './utils/getIngredients'
 import { loadShoppingList, saveShoppingList } from './utils/shoppingListStorage'
+import ShoppingListModalProps from './components/ShoppingListModal'
 
 function App() {
 
@@ -20,6 +21,8 @@ function App() {
   const [selectedMeal, setSelectedMeal] = useState<Meal | null>(null)
 
   const [shoppingList, setShoppingList] = useState<IngredientItem[]>([])
+
+  const [isShoppingListOpen, setIsShoppingListOpen] = useState<boolean>(false)
 
   const handleSearch = async (): Promise<void> => {
     if (searchTerm.trim() === '') {
@@ -42,23 +45,36 @@ function App() {
 
   }
 
-  const handleAddToShoppingList = (meal:Meal) => {
+  const handleAddToShoppingList = (meal: Meal) => {
     const currentList = loadShoppingList()
     const mealList = getIngredients(meal)
-    const newList = [...currentList,...mealList]
+    const newList = [...currentList, ...mealList]
     setShoppingList(newList)
     saveShoppingList(newList)
     alert("Shopping list has been updated!")
   }
 
+
+
   return (
-    <>
+    <main className='app'>
 
       <SearchBar
         searchTerm={searchTerm}
         onSearchTermChange={setSearchTerm}
         onSearch={handleSearch}
       />
+
+      <button className="shopping-list-button" onClick={() => setIsShoppingListOpen(true)}>view my shopping list</button>
+
+      {
+        isShoppingListOpen && (
+          <ShoppingListModalProps
+            shoppingList={shoppingList}
+            onClose={() => setIsShoppingListOpen(false)}
+          />
+        )
+      }
 
       {
         loading && <p>Loading...</p>
@@ -70,7 +86,7 @@ function App() {
         )
       }
 
-      <div>
+      <div className="meal-grid">
         {
           meals.map((meal) => (
             <MealCard
@@ -88,10 +104,10 @@ function App() {
             meal={selectedMeal}
             onClose={() => setSelectedMeal(null)}
             onAddToShoppingList={() => handleAddToShoppingList(selectedMeal)}
-            />
+          />
         )
       }
-    </>
+    </main>
   )
 }
 
